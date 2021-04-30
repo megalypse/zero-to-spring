@@ -13,8 +13,8 @@ services:
       - dojo-spring:/usr/src/app
     environment:
       POSTGRES_DB: dojo-spring
-      POSTGRES_USER: basic-user
-      POSTGRES_PASSWORD: example-password
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
 
 volumes:
   dojo-spring:
