@@ -1,0 +1,20 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - '5555:5432'
+    container_name: dojo-spring
+    volumes:
+      - dojo-spring:/usr/src/app
+    environment:
+      POSTGRES_DB: dojo-spring
+      POSTGRES_USER: basic-user
+      POSTGRES_PASSWORD: example-password
+
+volumes:
+  dojo-spring:

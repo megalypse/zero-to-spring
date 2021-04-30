@@ -1,0 +1,12 @@
+server:
+  error:
+    include-stacktrace: never
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5555/dojo-spring
+    username: basic-user
+    password: example-password
+  jpa:
+    hibernate:
+      ddl-auto: update
