@@ -1,46 +1,48 @@
 package com.zerotospring.zerotospring.Anime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.zerotospring.zerotospring.Anime.domain.Anime;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-@Service
-public class AnimeService {
-  private static List<Anime> animes;
+import lombok.RequiredArgsConstructor;
 
-  static {
-    animes = new ArrayList<>(List.of(new Anime(1L, "Re: Zero"), new Anime(2L, "Jujutsu Kaisen")));
-  }
+@Service
+@RequiredArgsConstructor
+public class AnimeService {
+  private final AnimeRepository animeRepository;
 
   public List<Anime> listAll() {
-    return animes; 
+    return this.animeRepository.findAll(); 
   }
 
   public Anime findById(Long id) {
-    return animes.stream().filter(anime -> anime.getId().equals(id))
-      .findFirst()
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime ID not found."));
+    Anime user = this.animeRepository.findById(id)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime ID not found"));
+
+    return user;
   }
 
   public Anime save(Anime anime) {
-    animes.add(anime);
-    
-    return anime;
+    return this.animeRepository.save(anime);
   }
 
-  public void delete(Long id) {
-    animes.remove(this.findById(id));
+  public ResponseEntity<Void> delete(Long id) {
+    this.animeRepository.deleteById(id);
+
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  public Anime replace(Anime anime) {
+  public Anime replace(Anime animeDto) {
+    Anime anime = this.findById(animeDto.getId());
+    anime = animeDto;
     this.delete(anime.getId());
-    animes.add(anime);
+    
 
-    return anime;
+    return this.save(anime);
   }
 }
