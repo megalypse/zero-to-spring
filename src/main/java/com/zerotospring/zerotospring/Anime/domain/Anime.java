@@ -12,10 +12,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Data
 @Builder
 public class Anime {
   @Id

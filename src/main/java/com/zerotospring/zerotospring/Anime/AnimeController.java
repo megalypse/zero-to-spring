@@ -3,6 +3,8 @@ package com.zerotospring.zerotospring.Anime;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.zerotospring.zerotospring.Anime.domain.Anime;
 import com.zerotospring.zerotospring.Anime.dto.PostAnimeDto;
 import com.zerotospring.zerotospring.util.DateUtil;
@@ -48,7 +50,7 @@ public class AnimeController {
   }
 
   @PostMapping("/")
-  public ResponseEntity<Anime> save(@RequestBody PostAnimeDto dto) {
+  public ResponseEntity<Anime> save(@RequestBody @Valid PostAnimeDto dto) {
     return ResponseEntity.ok(this.animeService.save(dto));
   }
 
