@@ -3,6 +3,8 @@ package com.zerotospring.zerotospring.Anime;
 import java.util.List;
 
 import com.zerotospring.zerotospring.Anime.domain.Anime;
+import com.zerotospring.zerotospring.Anime.dto.PostAnimeDto;
+import com.zerotospring.zerotospring.Mappers.AnimeMapper;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +22,15 @@ public class AnimeService {
     return this.animeRepository.findAll(); 
   }
 
-  public Anime findById(Long id) {
+  public Anime findByIdOrThrow(Long id) {
     Anime user = this.animeRepository.findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime ID not found"));
 
     return user;
   }
 
-  public Anime save(Anime anime) {
-    return this.animeRepository.save(anime);
+  public Anime save(PostAnimeDto dto) {
+    return this.animeRepository.save(AnimeMapper.INSTANCE.toAnime(dto));
   }
 
   public ResponseEntity<Void> delete(Long id) {
@@ -37,12 +39,14 @@ public class AnimeService {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  public Anime replace(Anime animeDto) {
-    Anime anime = this.findById(animeDto.getId());
-    anime = animeDto;
-    this.delete(anime.getId());
-    
+  public Anime replace(Anime anime) {
+    Anime savedAnime = this.findByIdOrThrow(anime.getId());
+    anime.setId(savedAnime.getId());
 
-    return this.save(anime);
+    return this.animeRepository.save(anime);
+  }
+
+  public List<Anime> findByName(String name) {
+    return this.animeRepository.findByName(name);
   }
 }
