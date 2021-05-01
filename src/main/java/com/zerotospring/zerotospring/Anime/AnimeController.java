@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.zerotospring.zerotospring.Anime.domain.Anime;
+import com.zerotospring.zerotospring.Anime.dto.PostAnimeDto;
 import com.zerotospring.zerotospring.util.DateUtil;
 
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -37,12 +39,17 @@ public class AnimeController {
 
   @GetMapping("/{id}")
   public ResponseEntity<Anime> findById(@PathVariable Long id) {
-    return ResponseEntity.ok(this.animeService.findById(id));
+    return ResponseEntity.ok(this.animeService.findByIdOrThrow(id));
+  }
+
+  @GetMapping("/list")
+  public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
+    return ResponseEntity.ok(this.animeService.findByName(name));
   }
 
   @PostMapping("/")
-  public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-    return ResponseEntity.ok(this.animeService.save(anime));
+  public ResponseEntity<Anime> save(@RequestBody PostAnimeDto dto) {
+    return ResponseEntity.ok(this.animeService.save(dto));
   }
 
   @DeleteMapping("/{id}")
