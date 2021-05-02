@@ -6,6 +6,8 @@ import com.zerotospring.zerotospring.Anime.domain.Anime;
 import com.zerotospring.zerotospring.Anime.dto.PostAnimeDto;
 import com.zerotospring.zerotospring.Mappers.AnimeMapper;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class AnimeService {
   private final AnimeRepository animeRepository;
 
-  public List<Anime> listAll() {
-    return this.animeRepository.findAll(); 
+  public Page<Anime> listAll(Pageable pageable) {
+    return this.animeRepository.findAll(pageable); 
   }
 
   public Anime findByIdOrThrow(Long id) {
