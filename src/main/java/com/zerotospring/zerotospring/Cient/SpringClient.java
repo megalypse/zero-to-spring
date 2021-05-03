@@ -31,7 +31,7 @@ public class SpringClient {
 
     // Um exemplo de exchange POST
     Anime reZero = Anime.builder().name("Re: Zero").build();
-    
+
     new RestTemplate().exchange(
       "http://localhost:8080/animes/", 
       HttpMethod.POST,
