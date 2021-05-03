@@ -5,6 +5,7 @@ import java.util.List;
 import com.zerotospring.zerotospring.Anime.domain.Anime;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,6 +27,16 @@ public class SpringClient {
       HttpMethod.GET,
       null,
       new ParameterizedTypeReference<List<Anime>>() {}
+    );
+
+    // Um exemplo de exchange POST
+    Anime reZero = Anime.builder().name("Re: Zero").build();
+    
+    new RestTemplate().exchange(
+      "http://localhost:8080/animes/", 
+      HttpMethod.POST,
+      new HttpEntity<>(reZero),
+      Anime.class
     );
   }
 }
