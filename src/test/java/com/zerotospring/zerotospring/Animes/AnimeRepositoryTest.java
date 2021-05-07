@@ -25,6 +25,15 @@ class AnimeRepositoryTest {
     Assertions.assertThat(savedAnime.getName()).isEqualTo(anime.getName());
   }
 
+  @Test
+  void find_FindAnime_Success() {
+    Anime anime = this.createAnime();
+    this.animeRepository.save(anime);
+    Anime result = this.animeRepository.findByName(anime.getName()).get(0);
+
+    Assertions.assertThat(result.getName()).isEqualTo(anime.getName());
+  }
+
   private Anime createAnime() {
     return Anime.builder()
       .name("Re: Zero")
