@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 import com.zerotospring.zerotospring.Anime.dto.PostAnimeDto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Anime {
   private Long id;
 
   private String name;
+
 
   public static Anime fromDto(PostAnimeDto dto) {
     Anime anime = new Anime();
